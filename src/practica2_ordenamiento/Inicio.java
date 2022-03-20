@@ -251,7 +251,6 @@ public class Inicio extends javax.swing.JFrame {
                     i++;
                 }
                 //graficar
-                
                 JFreeChart chart = mostrar(cat, titulo,encabezado1[0],encabezado1[1]);
                 ChartPanel panel = new ChartPanel(chart);
                 panel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
@@ -260,10 +259,10 @@ public class Inicio extends javax.swing.JFrame {
                 jPanel1.removeAll();
                 jPanel1.setLayout(new BorderLayout());
                 jPanel1.add(panel, BorderLayout.NORTH);
-                
                 pack();
                 repaint();
-                for (int j = 0; j < tamano - 2; j++) {
+                //añadir los valores a la grafica
+                for (int j = 0; j < tamano - 1; j++) {
                     cat.setValue(valoresy[j], "", valoresx[j]);
                 }
 
@@ -286,10 +285,15 @@ public class Inicio extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        cat.removeColumn(1);
-        cat.setValue(valoresy[24], "", valoresx[24]);
+        borrar();
+        
     }//GEN-LAST:event_jButton2ActionPerformed
-    
+    private void borrar(){
+        int k=cat.getColumnCount();
+        for (int i = 0; i < k; i++) {
+            cat.removeColumn(0);
+        }
+    }
     private JFreeChart mostrar(DefaultCategoryDataset dataset, String nombre,String enca1,String enca2) {
         JFreeChart barChart = ChartFactory.createBarChart(
                 nombre,
