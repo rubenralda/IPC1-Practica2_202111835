@@ -36,6 +36,12 @@ public class Inicio extends javax.swing.JFrame {
      */
     public Inicio() {
         initComponents();
+        buttonGroup1.add(ascend);
+        buttonGroup1.add(descend);
+        buttonGroup2.add(insertion);
+        buttonGroup2.add(merge);
+        ascend.setSelected(true);
+        insertion.setSelected(true);
         cat = new DefaultCategoryDataset();
     }
 
@@ -57,17 +63,18 @@ public class Inicio extends javax.swing.JFrame {
         txtruta = new javax.swing.JTextField();
         txtnombre = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
-        jRadioButton4 = new javax.swing.JRadioButton();
+        ascend = new javax.swing.JRadioButton();
+        descend = new javax.swing.JRadioButton();
+        insertion = new javax.swing.JRadioButton();
+        merge = new javax.swing.JRadioButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        labelpasos = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -78,13 +85,13 @@ public class Inicio extends javax.swing.JFrame {
             }
         });
 
-        jRadioButton1.setText("Ascendente");
+        ascend.setText("Ascendente");
 
-        jRadioButton2.setText("Descendente");
+        descend.setText("Descendente");
 
-        jRadioButton3.setText("jRadioButton3");
+        insertion.setText("Insertion sort");
 
-        jRadioButton4.setText("jRadioButton4");
+        merge.setText("Merge sort");
 
         jButton2.setText("Ordenar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -113,11 +120,14 @@ public class Inicio extends javax.swing.JFrame {
 
         jLabel1.setText("00:00");
 
-        jLabel3.setText("00");
+        labelpasos.setText("00");
 
         jLabel2.setText("Cronometro");
 
         jLabel4.setText("Pasos");
+
+        jButton4.setText("Generar reporte");
+        jButton4.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -131,13 +141,14 @@ public class Inicio extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jRadioButton4)
-                                    .addComponent(jButton2))
-                                .addComponent(jRadioButton3, javax.swing.GroupLayout.Alignment.TRAILING))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addComponent(jButton2)
+                                    .addGap(8, 8, 8))
+                                .addComponent(insertion, javax.swing.GroupLayout.Alignment.TRAILING))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jRadioButton2)
-                                .addComponent(jRadioButton1, javax.swing.GroupLayout.Alignment.LEADING))))
+                                .addComponent(descend)
+                                .addComponent(ascend, javax.swing.GroupLayout.Alignment.LEADING))
+                            .addComponent(merge)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -148,7 +159,7 @@ public class Inicio extends javax.swing.JFrame {
                                 .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jButton1)))
-                        .addGap(73, 73, 73)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 154, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel2)
                             .addGroup(layout.createSequentialGroup()
@@ -160,9 +171,10 @@ public class Inicio extends javax.swing.JFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel4)
-                                            .addComponent(jLabel3))
+                                            .addComponent(labelpasos))
                                         .addGap(28, 28, 28)))))
-                        .addGap(0, 243, Short.MAX_VALUE)))
+                        .addGap(43, 43, 43)
+                        .addComponent(jButton4)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -179,26 +191,28 @@ public class Inicio extends javax.swing.JFrame {
                             .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton1))
                         .addGap(64, 64, 64)
-                        .addComponent(jRadioButton1)
+                        .addComponent(ascend)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jRadioButton2)
+                        .addComponent(descend)
                         .addGap(29, 29, 29)
-                        .addComponent(jRadioButton3)
+                        .addComponent(insertion)
                         .addGap(8, 8, 8)
-                        .addComponent(jRadioButton4)
+                        .addComponent(merge)
                         .addGap(18, 18, 18)
                         .addComponent(jButton2))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel2)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(jButton4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel3)
+                        .addComponent(labelpasos)
                         .addGap(4, 4, 4)
                         .addComponent(jLabel4)
                         .addGap(11, 11, 11)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(56, Short.MAX_VALUE))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
 
         pack();
@@ -251,7 +265,7 @@ public class Inicio extends javax.swing.JFrame {
                     i++;
                 }
                 //graficar
-                JFreeChart chart = mostrar(cat, titulo,encabezado1[0],encabezado1[1]);
+                JFreeChart chart = mostrar(cat, titulo, encabezado1[0], encabezado1[1]);
                 ChartPanel panel = new ChartPanel(chart);
                 panel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
                 panel.setPreferredSize(new Dimension(400, 400));
@@ -262,7 +276,9 @@ public class Inicio extends javax.swing.JFrame {
                 pack();
                 repaint();
                 //añadir los valores a la grafica
+                borrar();
                 for (int j = 0; j < tamano - 1; j++) {
+
                     cat.setValue(valoresy[j], "", valoresx[j]);
                 }
 
@@ -272,7 +288,6 @@ public class Inicio extends javax.swing.JFrame {
                 if (null != br) {
                     try {
                         br.close();
-
                     } catch (IOException ex) {
                         Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -282,19 +297,75 @@ public class Inicio extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No hay un archivo cargado", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
-
+    private int[] ordenadoy;
+    private String[] ordenadox;
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         borrar();
-        
+        if (valoresy != null) {
+            if (insertion.isSelected()) {
+                if (ascend.isSelected()) {
+                    metodoinsercion(valoresy, valoresx,0);
+                    for (int j = 0; j < valoresy.length; j++) {
+                        cat.setValue(ordenadoy[j], "", ordenadox[j]);
+                    }
+                }else{
+                    metodoinsercion(valoresy, valoresx,1);
+                    for (int j = 0; j < valoresy.length; j++) {
+                        cat.setValue(ordenadoy[j], "", ordenadox[j]);
+                    }
+                }
+                jButton4.setEnabled(true);
+            }
+            
+        } else {
+            JOptionPane.showMessageDialog(this, "No se generado una grafica");
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
-    private void borrar(){
-        int k=cat.getColumnCount();
+
+    private void metodoinsercion(int[] ordenary, String[] ordenarx, int tipo) {
+        int insercion;
+        String insercionx;
+        for (int siguiente = 1; siguiente < ordenary.length; siguiente++) {
+            labelpasos.setText(String.valueOf(siguiente - 1));
+            insercion = ordenary[siguiente];
+            insercionx = ordenarx[siguiente];
+            int moverElemento = siguiente;
+            switch (tipo) {
+                case 0: //ascendente
+                    while (moverElemento > 0 && ordenary[moverElemento - 1] > insercion) {
+                        ordenary[moverElemento] = ordenary[moverElemento - 1];
+                        ordenarx[moverElemento] = ordenarx[moverElemento - 1];
+                        moverElemento--;
+                    }
+                    ordenary[moverElemento] = insercion;
+                    ordenarx[moverElemento] = insercionx;
+                    break;
+                case 1: //descendente
+                    while (moverElemento > 0 && ordenary[moverElemento - 1] < insercion) {
+                        ordenary[moverElemento] = ordenary[moverElemento - 1];
+                        ordenarx[moverElemento] = ordenarx[moverElemento - 1];
+                        moverElemento--;
+                    }
+                    ordenary[moverElemento] = insercion;
+                    ordenarx[moverElemento] = insercionx;
+                    break;
+                default:
+                    throw new AssertionError();
+            }
+        }
+        this.ordenadoy = ordenary;
+        this.ordenadox = ordenarx;
+    }
+
+    private void borrar() {
+        int k = cat.getColumnCount();
         for (int i = 0; i < k; i++) {
             cat.removeColumn(0);
         }
     }
-    private JFreeChart mostrar(DefaultCategoryDataset dataset, String nombre,String enca1,String enca2) {
+
+    private JFreeChart mostrar(DefaultCategoryDataset dataset, String nombre, String enca1, String enca2) {
         JFreeChart barChart = ChartFactory.createBarChart(
                 nombre,
                 enca1,
@@ -309,24 +380,25 @@ public class Inicio extends javax.swing.JFrame {
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JRadioButton ascend;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.ButtonGroup buttonGroup3;
     private javax.swing.ButtonGroup buttonGroup4;
     private javax.swing.ButtonGroup buttonGroup5;
     private javax.swing.ButtonGroup buttonGroup6;
+    private javax.swing.JRadioButton descend;
+    private javax.swing.JRadioButton insertion;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JRadioButton jRadioButton4;
+    private javax.swing.JLabel labelpasos;
+    private javax.swing.JRadioButton merge;
     private javax.swing.JTextField txtnombre;
     private javax.swing.JTextField txtruta;
     // End of variables declaration//GEN-END:variables
