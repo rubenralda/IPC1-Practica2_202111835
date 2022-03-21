@@ -375,11 +375,10 @@ public class Inicio extends javax.swing.JFrame {
                     + "<body>");
 
             nuevaLinea.println("<h1>Reporte </h1>");
-            //muestro el libro
             nuevaLinea.println("<p><b>Nombre: </b>Rubén Ralda</p>");
             nuevaLinea.println("<p><b>Carné: </b>202111835</p>");
             nuevaLinea.println("<p><b>Algoritmo: </b>" + algoritmo + "</p>");
-            nuevaLinea.println("<p><b>Tiempo: </b>" + pasos + "</p>");//falta el cronometro
+            nuevaLinea.println("<p><b>Tiempo: </b>" + pasos + "</p>");
             nuevaLinea.println("<p><b>Cantidad de pasos: </b>" + pasos + "</p>");
             nuevaLinea.println("<table border=\"1\">");
             for (int i = 0; i < ordenadox.length; i++) {
@@ -442,7 +441,7 @@ public class Inicio extends javax.swing.JFrame {
                         for (int j = 0; j < ordenary.length; j++) {
                             cat.setValue(ordenary[j], "", ordenarx[j]);
                         }
-                    }
+                   }
                     ordenary[moverElemento] = insercion;
                     ordenarx[moverElemento] = insercionx;
                     borrar();
