@@ -11,7 +11,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -44,6 +46,13 @@ public class Inicio extends javax.swing.JFrame {
         insertion.setSelected(true);
         cat = new DefaultCategoryDataset();
     }
+    private int pasos;
+    private static int[] valoresy;
+    private static String[] valoresx;
+    DefaultCategoryDataset cat;
+    private static int[] ordenadoy;
+    private static String[] ordenadox;
+    private String algoritmo;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -229,15 +238,14 @@ public class Inicio extends javax.swing.JFrame {
             txtruta.setText(archivo.getSelectedFile().getAbsolutePath());
         }
     }//GEN-LAST:event_jButton3ActionPerformed
-    private int[] valoresy;
-    private String[] valoresx;
-    DefaultCategoryDataset cat;
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         String titulo = null;
         if (!txtruta.getText().equalsIgnoreCase("")) {
             if (txtnombre.getText().equalsIgnoreCase("")) {
                 titulo = "Grafica de ordenamiento";
+                txtnombre.setText(titulo);
             } else {
                 titulo = txtnombre.getText();
             }
@@ -281,7 +289,6 @@ public class Inicio extends javax.swing.JFrame {
                 //añadir los valores a la grafica
                 borrar();
                 for (int j = 0; j < tamano - 1; j++) {
-
                     cat.setValue(valoresy[j], "", valoresx[j]);
                 }
 
@@ -300,25 +307,35 @@ public class Inicio extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No hay un archivo cargado", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
-    private int[] ordenadoy;
-    private String[] ordenadox;
+
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+
         if (valoresy != null) {
+            pasos = 0;
+            int[] temporaly = new int[valoresx.length];
+            String[] temporalx = new String[valoresx.length];
+            for (int i = 0; i < valoresx.length; i++) {
+                temporaly[i] = valoresy[i];
+                temporalx[i] = valoresx[i];
+            }
             if (insertion.isSelected()) {
                 if (ascend.isSelected() == true) {
-                    metodoinsercion(valoresy, valoresx, 0);
+                    metodoinsercion(temporaly, temporalx, 0);
+
                 } else if (descend.isSelected() == true) {
-                    metodoinsercion(valoresy, valoresx, 1);
+                    metodoinsercion(temporaly, temporalx, 1);
                 }
                 jButton4.setEnabled(true);
+                algoritmo = "Ordenamiento por inserción";
             } else if (merge.isSelected() == true) {
                 if (ascend.isSelected()) {
-                    metodoburbuja(valoresy, valoresx, 0);
+                    metodoburbuja(temporaly, temporalx, 0);
                 } else if (descend.isSelected() == true) {
-                    metodoburbuja(valoresy, valoresx, 1);
+                    metodoburbuja(temporaly, temporalx, 1);
                 }
                 jButton4.setEnabled(true);
+                algoritmo = "Ordenamiento por burbuja";
             }
         } else {
             JOptionPane.showMessageDialog(this, "No se generado una grafica");
@@ -327,13 +344,88 @@ public class Inicio extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
+        String cwd = System.getProperty("user.dir");
+        File dir = new File(cwd + "\\Reportes");
+        FileWriter escribir;
+        PrintWriter nuevaLinea;
+        if (!dir.exists() && !dir.isDirectory()) {
+            try {
+                dir.mkdir();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, e);
+            }
+        }
+        File archivo = new File(cwd + "\\Reportes\\" + txtnombre.getText() + ".html");
+        archivo.delete();
+        try {
+            archivo.createNewFile();
+        } catch (IOException ex) {
+            Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
+        try {
+            escribir = new FileWriter(archivo, true);
+            nuevaLinea = new PrintWriter(escribir);
+            nuevaLinea.println("<!DOCTYPE html>\n"
+                    + "<html lang=\"en\">\n"
+                    + "<head>\n"
+                    + "    <meta charset=\"UTF-8\">\n"
+                    + "    <title>Reporte</title>\n"
+                    + "</head>\n"
+                    + "<body>");
+
+            nuevaLinea.println("<h1>Reporte </h1>");
+            //muestro el libro
+            nuevaLinea.println("<p><b>Nombre: </b>Rubén Ralda</p>");
+            nuevaLinea.println("<p><b>Carné: </b>202111835</p>");
+            nuevaLinea.println("<p><b>Algoritmo: </b>" + algoritmo + "</p>");
+            nuevaLinea.println("<p><b>Tiempo: </b>" + pasos + "</p>");
+            nuevaLinea.println("<p><b>Cantidad de pasos: </b>" + pasos + "</p>");
+            nuevaLinea.println("<table border=\"1\">");
+            for (int i = 0; i < ordenadox.length; i++) {
+                if (ordenadox[i] != null) {
+                    nuevaLinea.println("<tr>");
+                    nuevaLinea.print("<td>");
+                    nuevaLinea.print("<b>" + ordenadox[i] + "</b>");
+                    nuevaLinea.print("</td>");
+                    nuevaLinea.print("<td>");
+                    nuevaLinea.print(ordenadoy[i]);
+                    nuevaLinea.print("</td>");
+                    nuevaLinea.println("</tr>");
+                }
+            }
+            nuevaLinea.println("</table>");
+            nuevaLinea.println(" ");
+            nuevaLinea.println("<p>----------------------------------------------------------------------------------------------</p>");
+            nuevaLinea.println("<p><b>Datos no ordenados</b></p>");
+            nuevaLinea.println("<table border=\"1\">");
+            for (int i = 0; i < valoresx.length; i++) {
+                if (valoresx[i] != null) {
+                    nuevaLinea.println("<tr>");
+                    nuevaLinea.print("<td>");
+                    nuevaLinea.print("<b>" + valoresx[i] + "</b>");
+                    nuevaLinea.print("</td>");
+                    nuevaLinea.print("<td>");
+                    nuevaLinea.print(valoresy[i]);
+                    nuevaLinea.print("</td>");
+                    nuevaLinea.println("</tr>");
+                }
+            }
+            nuevaLinea.println("</table>");
+            nuevaLinea.println(" ");
+            nuevaLinea.println("</body>\n"
+                    + "</html>");
+            // me cierra mi archivo
+            escribir.close();
+            JOptionPane.showMessageDialog(this, "El reporte se ha creado con exito");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e);
+        }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void metodoinsercion(int[] ordenary, String[] ordenarx, int tipo) {
-        int insercion, contador = 0;
+        int insercion;
         String insercionx;
-        contador = 0;
         for (int siguiente = 1; siguiente < ordenary.length; siguiente++) {
             insercion = ordenary[siguiente];
             insercionx = ordenarx[siguiente];
@@ -344,11 +436,15 @@ public class Inicio extends javax.swing.JFrame {
                         ordenary[moverElemento] = ordenary[moverElemento - 1];
                         ordenarx[moverElemento] = ordenarx[moverElemento - 1];
                         moverElemento--;
+                        pasos++;
+                        labelpasos.setText(String.valueOf(pasos));
+                        borrar();
+                        for (int j = 0; j < ordenary.length; j++) {
+                            cat.setValue(ordenary[j], "", ordenarx[j]);
+                        }
                     }
                     ordenary[moverElemento] = insercion;
                     ordenarx[moverElemento] = insercionx;
-                    contador += 1;
-                    labelpasos.setText(String.valueOf(contador));
                     borrar();
                     for (int j = 0; j < ordenary.length; j++) {
                         cat.setValue(ordenary[j], "", ordenarx[j]);
@@ -359,8 +455,8 @@ public class Inicio extends javax.swing.JFrame {
                         ordenary[moverElemento] = ordenary[moverElemento - 1];
                         ordenarx[moverElemento] = ordenarx[moverElemento - 1];
                         moverElemento--;
-                        contador += 1;
-                        labelpasos.setText(String.valueOf(contador));
+                        pasos++;
+                        labelpasos.setText(String.valueOf(pasos));
                         borrar();
                         for (int j = 0; j < ordenary.length; j++) {
                             cat.setValue(ordenary[j], "", ordenarx[j]);
@@ -368,6 +464,10 @@ public class Inicio extends javax.swing.JFrame {
                     }
                     ordenary[moverElemento] = insercion;
                     ordenarx[moverElemento] = insercionx;
+                    borrar();
+                    for (int j = 0; j < ordenary.length; j++) {
+                        cat.setValue(ordenary[j], "", ordenarx[j]);
+                    }
                     break;
                 default:
                     throw new AssertionError();
@@ -378,13 +478,12 @@ public class Inicio extends javax.swing.JFrame {
     }
 
     private void metodoburbuja(int[] ordenary, String[] ordenarx, int tipo) {
-        int n, i, l = ordenary.length, temp, contador = 0;
+        int n, i, l = ordenary.length, temp;
         String temp2;
         switch (tipo) {
             case 0://ascendente
                 do {
                     n = 0;
-                    labelpasos.setText(String.valueOf(contador));
                     for (i = 1; i < l; i++) {
                         if (ordenary[i - 1] > ordenary[i]) {
                             temp = ordenary[i - 1];
@@ -393,11 +492,16 @@ public class Inicio extends javax.swing.JFrame {
                             temp2 = ordenarx[i - 1];
                             ordenarx[i - 1] = ordenarx[i];
                             ordenarx[i] = temp2;
+                            pasos++;
                             n = i;
+                            borrar();
+                            for (int j = 0; j < valoresy.length; j++) {
+                                cat.setValue(ordenary[j], "", ordenarx[j]);
+                            }
                         }
                     }
-                    contador++;
                     l = n;
+                    labelpasos.setText(String.valueOf(pasos));
                     borrar();
                     for (int j = 0; j < valoresy.length; j++) {
                         cat.setValue(ordenary[j], "", ordenarx[j]);
@@ -407,7 +511,6 @@ public class Inicio extends javax.swing.JFrame {
             case 1://descendente
                 do {
                     n = 0;
-                    labelpasos.setText(String.valueOf(contador));
                     for (i = 1; i < l; i++) {
                         if (ordenary[i - 1] < ordenary[i]) {
                             temp = ordenary[i - 1];
@@ -417,10 +520,15 @@ public class Inicio extends javax.swing.JFrame {
                             ordenarx[i - 1] = ordenarx[i];
                             ordenarx[i] = temp2;
                             n = i;
+                            pasos++;
+                            borrar();
+                            for (int j = 0; j < valoresy.length; j++) {
+                                cat.setValue(ordenary[j], "", ordenarx[j]);
+                            }
                         }
                     }
                     l = n;
-                    contador++;
+                    labelpasos.setText(String.valueOf(pasos));
                     borrar();
                     for (int j = 0; j < valoresy.length; j++) {
                         cat.setValue(ordenary[j], "", ordenarx[j]);
