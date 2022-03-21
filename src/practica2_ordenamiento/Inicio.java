@@ -379,7 +379,7 @@ public class Inicio extends javax.swing.JFrame {
             nuevaLinea.println("<p><b>Nombre: </b>Rubén Ralda</p>");
             nuevaLinea.println("<p><b>Carné: </b>202111835</p>");
             nuevaLinea.println("<p><b>Algoritmo: </b>" + algoritmo + "</p>");
-            nuevaLinea.println("<p><b>Tiempo: </b>" + pasos + "</p>");
+            nuevaLinea.println("<p><b>Tiempo: </b>" + pasos + "</p>");//falta el cronometro
             nuevaLinea.println("<p><b>Cantidad de pasos: </b>" + pasos + "</p>");
             nuevaLinea.println("<table border=\"1\">");
             for (int i = 0; i < ordenadox.length; i++) {
@@ -492,8 +492,9 @@ public class Inicio extends javax.swing.JFrame {
                             temp2 = ordenarx[i - 1];
                             ordenarx[i - 1] = ordenarx[i];
                             ordenarx[i] = temp2;
-                            pasos++;
                             n = i;
+                            pasos++;
+                            labelpasos.setText(String.valueOf(pasos));
                             borrar();
                             for (int j = 0; j < valoresy.length; j++) {
                                 cat.setValue(ordenary[j], "", ordenarx[j]);
@@ -501,7 +502,6 @@ public class Inicio extends javax.swing.JFrame {
                         }
                     }
                     l = n;
-                    labelpasos.setText(String.valueOf(pasos));
                     borrar();
                     for (int j = 0; j < valoresy.length; j++) {
                         cat.setValue(ordenary[j], "", ordenarx[j]);
@@ -521,6 +521,7 @@ public class Inicio extends javax.swing.JFrame {
                             ordenarx[i] = temp2;
                             n = i;
                             pasos++;
+                            labelpasos.setText(String.valueOf(pasos));
                             borrar();
                             for (int j = 0; j < valoresy.length; j++) {
                                 cat.setValue(ordenary[j], "", ordenarx[j]);
@@ -528,7 +529,6 @@ public class Inicio extends javax.swing.JFrame {
                         }
                     }
                     l = n;
-                    labelpasos.setText(String.valueOf(pasos));
                     borrar();
                     for (int j = 0; j < valoresy.length; j++) {
                         cat.setValue(ordenary[j], "", ordenarx[j]);
