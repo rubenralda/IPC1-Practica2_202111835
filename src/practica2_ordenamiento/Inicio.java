@@ -91,7 +91,7 @@ public class Inicio extends javax.swing.JFrame {
 
         insertion.setText("Insertion sort");
 
-        merge.setText("Merge sort");
+        merge.setText("buble sort");
 
         jButton2.setText("Ordenar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -128,6 +128,11 @@ public class Inicio extends javax.swing.JFrame {
 
         jButton4.setText("Generar reporte");
         jButton4.setEnabled(false);
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -162,17 +167,15 @@ public class Inicio extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 154, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel2)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(7, 7, 7)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addComponent(jLabel1)
-                                        .addGap(31, 31, 31))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel4)
-                                            .addComponent(labelpasos))
-                                        .addGap(28, 28, 28)))))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addComponent(jLabel1)
+                                    .addGap(31, 31, 31))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel4)
+                                        .addComponent(labelpasos))
+                                    .addGap(28, 28, 28))))
                         .addGap(43, 43, 43)
                         .addComponent(jButton4)))
                 .addContainerGap())
@@ -301,33 +304,37 @@ public class Inicio extends javax.swing.JFrame {
     private String[] ordenadox;
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        borrar();
         if (valoresy != null) {
             if (insertion.isSelected()) {
+                if (ascend.isSelected() == true) {
+                    metodoinsercion(valoresy, valoresx, 0);
+                } else if (descend.isSelected() == true) {
+                    metodoinsercion(valoresy, valoresx, 1);
+                }
+                jButton4.setEnabled(true);
+            } else if (merge.isSelected() == true) {
                 if (ascend.isSelected()) {
-                    metodoinsercion(valoresy, valoresx,0);
-                    for (int j = 0; j < valoresy.length; j++) {
-                        cat.setValue(ordenadoy[j], "", ordenadox[j]);
-                    }
-                }else{
-                    metodoinsercion(valoresy, valoresx,1);
-                    for (int j = 0; j < valoresy.length; j++) {
-                        cat.setValue(ordenadoy[j], "", ordenadox[j]);
-                    }
+                    metodoburbuja(valoresy, valoresx, 0);
+                } else if (descend.isSelected() == true) {
+                    metodoburbuja(valoresy, valoresx, 1);
                 }
                 jButton4.setEnabled(true);
             }
-            
         } else {
             JOptionPane.showMessageDialog(this, "No se generado una grafica");
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_jButton4ActionPerformed
+
     private void metodoinsercion(int[] ordenary, String[] ordenarx, int tipo) {
-        int insercion;
+        int insercion, contador = 0;
         String insercionx;
+        contador = 0;
         for (int siguiente = 1; siguiente < ordenary.length; siguiente++) {
-            labelpasos.setText(String.valueOf(siguiente - 1));
             insercion = ordenary[siguiente];
             insercionx = ordenarx[siguiente];
             int moverElemento = siguiente;
@@ -340,12 +347,24 @@ public class Inicio extends javax.swing.JFrame {
                     }
                     ordenary[moverElemento] = insercion;
                     ordenarx[moverElemento] = insercionx;
+                    contador += 1;
+                    labelpasos.setText(String.valueOf(contador));
+                    borrar();
+                    for (int j = 0; j < ordenary.length; j++) {
+                        cat.setValue(ordenary[j], "", ordenarx[j]);
+                    }
                     break;
                 case 1: //descendente
                     while (moverElemento > 0 && ordenary[moverElemento - 1] < insercion) {
                         ordenary[moverElemento] = ordenary[moverElemento - 1];
                         ordenarx[moverElemento] = ordenarx[moverElemento - 1];
                         moverElemento--;
+                        contador += 1;
+                        labelpasos.setText(String.valueOf(contador));
+                        borrar();
+                        for (int j = 0; j < ordenary.length; j++) {
+                            cat.setValue(ordenary[j], "", ordenarx[j]);
+                        }
                     }
                     ordenary[moverElemento] = insercion;
                     ordenarx[moverElemento] = insercionx;
@@ -354,8 +373,65 @@ public class Inicio extends javax.swing.JFrame {
                     throw new AssertionError();
             }
         }
-        this.ordenadoy = ordenary;
         this.ordenadox = ordenarx;
+        this.ordenadoy = ordenary;
+    }
+
+    private void metodoburbuja(int[] ordenary, String[] ordenarx, int tipo) {
+        int n, i, l = ordenary.length, temp, contador = 0;
+        String temp2;
+        switch (tipo) {
+            case 0://ascendente
+                do {
+                    n = 0;
+                    labelpasos.setText(String.valueOf(contador));
+                    for (i = 1; i < l; i++) {
+                        if (ordenary[i - 1] > ordenary[i]) {
+                            temp = ordenary[i - 1];
+                            ordenary[i - 1] = ordenary[i];
+                            ordenary[i] = temp;
+                            temp2 = ordenarx[i - 1];
+                            ordenarx[i - 1] = ordenarx[i];
+                            ordenarx[i] = temp2;
+                            n = i;
+                        }
+                    }
+                    contador++;
+                    l = n;
+                    borrar();
+                    for (int j = 0; j < valoresy.length; j++) {
+                        cat.setValue(ordenary[j], "", ordenarx[j]);
+                    }
+                } while (n != 0);
+                break;
+            case 1://descendente
+                do {
+                    n = 0;
+                    labelpasos.setText(String.valueOf(contador));
+                    for (i = 1; i < l; i++) {
+                        if (ordenary[i - 1] < ordenary[i]) {
+                            temp = ordenary[i - 1];
+                            ordenary[i - 1] = ordenary[i];
+                            ordenary[i] = temp;
+                            temp2 = ordenarx[i - 1];
+                            ordenarx[i - 1] = ordenarx[i];
+                            ordenarx[i] = temp2;
+                            n = i;
+                        }
+                    }
+                    l = n;
+                    contador++;
+                    borrar();
+                    for (int j = 0; j < valoresy.length; j++) {
+                        cat.setValue(ordenary[j], "", ordenarx[j]);
+                    }
+                } while (n != 0);
+                break;
+            default:
+                throw new AssertionError();
+        }
+        this.ordenadox = ordenarx;
+        this.ordenadoy = ordenary;
     }
 
     private void borrar() {

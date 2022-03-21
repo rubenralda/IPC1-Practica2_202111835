@@ -15,6 +15,7 @@ public class Practica2_Ordenamiento {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        
         Inicio inicio= new Inicio();
         inicio.setVisible(true);
     }
