@@ -9,28 +9,20 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import static java.lang.Thread.sleep;
 import java.util.Scanner;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 
 /**
@@ -336,7 +328,7 @@ public class Inicio extends javax.swing.JFrame {
                     insercion.start();
                 }
                 jButton4.setEnabled(true);
-                algoritmo = "Ordenamiento por inserción";
+                algoritmo = "Ordenamiento por insercion";
             } else if (merge.isSelected() == true) {
                 if (ascend.isSelected()) {
                     Burbuja burbuja = new Burbuja(labelpasos, ordenadox, ordenadoy, jPanel1, encabezado1, titulo, jLabel1, 0);

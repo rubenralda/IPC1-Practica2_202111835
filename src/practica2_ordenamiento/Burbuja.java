@@ -103,7 +103,6 @@ public class Burbuja extends Thread {
                                 System.out.println("Error: " + e);
                             }
                             mostrar();
-
                         }
                     }
                     l = n;
