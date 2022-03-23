@@ -14,12 +14,18 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import static java.lang.Thread.sleep;
 import java.util.Scanner;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -44,15 +50,15 @@ public class Inicio extends javax.swing.JFrame {
         buttonGroup2.add(merge);
         ascend.setSelected(true);
         insertion.setSelected(true);
-        cat = new DefaultCategoryDataset();
+
     }
     private int pasos;
     private static int[] valoresy;
     private static String[] valoresx;
-    DefaultCategoryDataset cat;
     private static int[] ordenadoy;
     private static String[] ordenadox;
-    private String algoritmo;
+    private String algoritmo, titulo;
+    String[] encabezado1;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -241,7 +247,6 @@ public class Inicio extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        String titulo = null;
         if (!txtruta.getText().equalsIgnoreCase("")) {
             if (txtnombre.getText().equalsIgnoreCase("")) {
                 titulo = "Grafica de ordenamiento";
@@ -266,7 +271,7 @@ public class Inicio extends javax.swing.JFrame {
                 valoresx = new String[tamano - 1];
                 String line = br.readLine();
                 int i = 0;
-                String[] encabezado1 = line.split(",");
+                encabezado1 = line.split(",");
                 line = br.readLine();
                 while (null != line) {
                     temporal[i] = line.split(",");
@@ -276,22 +281,14 @@ public class Inicio extends javax.swing.JFrame {
                     i++;
                 }
                 //graficar
-                JFreeChart chart = mostrar(cat, titulo, encabezado1[0], encabezado1[1]);
-                ChartPanel panel = new ChartPanel(chart);
-                panel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
-                panel.setPreferredSize(new Dimension(400, 400));
-                panel.setBackground(Color.white);
-                jPanel1.removeAll();
-                jPanel1.setLayout(new BorderLayout());
-                jPanel1.add(panel, BorderLayout.NORTH);
-                pack();
-                repaint();
+
+                mostrar(encabezado1, titulo, valoresy, valoresx);
+
                 //añadir los valores a la grafica
-                borrar();
+                /*borrar();
                 for (int j = 0; j < tamano - 1; j++) {
                     cat.setValue(valoresy[j], "", valoresx[j]);
-                }
-
+                }*/
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             } finally {
@@ -312,27 +309,28 @@ public class Inicio extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         if (valoresy != null) {
-            pasos = 0;
-            int[] temporaly = new int[valoresx.length];
-            String[] temporalx = new String[valoresx.length];
-            for (int i = 0; i < valoresx.length; i++) {
-                temporaly[i] = valoresy[i];
-                temporalx[i] = valoresx[i];
+            ordenadoy = new int[valoresx.length];
+            ordenadox = new String[valoresx.length];
+            for (int j = 0; j < valoresx.length; j++) {
+                ordenadoy[j] = valoresy[j];
+                ordenadox[j] = valoresx[j];
             }
             if (insertion.isSelected()) {
                 if (ascend.isSelected() == true) {
-                    metodoinsercion(temporaly, temporalx, 0);
+                    Insercion insercion = new Insercion(labelpasos, ordenadox, ordenadoy, jPanel1, encabezado1, titulo, jLabel1, 0);
+                    insercion.start();
 
                 } else if (descend.isSelected() == true) {
-                    metodoinsercion(temporaly, temporalx, 1);
+                    Insercion insercion = new Insercion(labelpasos, ordenadox, ordenadoy, jPanel1, encabezado1, titulo, jLabel1, 1);
+                    insercion.start();
                 }
                 jButton4.setEnabled(true);
                 algoritmo = "Ordenamiento por inserción";
             } else if (merge.isSelected() == true) {
                 if (ascend.isSelected()) {
-                    metodoburbuja(temporaly, temporalx, 0);
+                    // metodoburbuja(temporaly, temporalx, 0);
                 } else if (descend.isSelected() == true) {
-                    metodoburbuja(temporaly, temporalx, 1);
+                    // metodoburbuja(temporaly, temporalx, 1);
                 }
                 jButton4.setEnabled(true);
                 algoritmo = "Ordenamiento por burbuja";
@@ -341,7 +339,7 @@ public class Inicio extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No se generado una grafica");
         }
     }//GEN-LAST:event_jButton2ActionPerformed
-
+    //creacion de reporte
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         String cwd = System.getProperty("user.dir");
@@ -378,9 +376,17 @@ public class Inicio extends javax.swing.JFrame {
             nuevaLinea.println("<p><b>Nombre: </b>Rubén Ralda</p>");
             nuevaLinea.println("<p><b>Carné: </b>202111835</p>");
             nuevaLinea.println("<p><b>Algoritmo: </b>" + algoritmo + "</p>");
-            nuevaLinea.println("<p><b>Tiempo: </b>" + pasos + "</p>");
-            nuevaLinea.println("<p><b>Cantidad de pasos: </b>" + pasos + "</p>");
+            nuevaLinea.println("<p><b>Tiempo: </b>" + pasos + "</p>");//falta el cronometro
+            nuevaLinea.println("<p><b>Cantidad de pasos: </b>" + labelpasos.getText() + "</p>");
             nuevaLinea.println("<table border=\"1\">");
+            nuevaLinea.println("<tr>");
+            nuevaLinea.print("<td>");
+            nuevaLinea.print("<b>" + encabezado1[0] + "</b>");
+            nuevaLinea.print("</td>");
+            nuevaLinea.print("<td>");
+            nuevaLinea.print("<b>" + encabezado1[1] + "</b>");
+            nuevaLinea.print("</td>");
+            nuevaLinea.println("</tr>");
             for (int i = 0; i < ordenadox.length; i++) {
                 if (ordenadox[i] != null) {
                     nuevaLinea.println("<tr>");
@@ -398,6 +404,14 @@ public class Inicio extends javax.swing.JFrame {
             nuevaLinea.println("<p>----------------------------------------------------------------------------------------------</p>");
             nuevaLinea.println("<p><b>Datos no ordenados</b></p>");
             nuevaLinea.println("<table border=\"1\">");
+            nuevaLinea.println("<tr>");
+            nuevaLinea.print("<td>");
+            nuevaLinea.print("<b>" + encabezado1[0] + "</b>");
+            nuevaLinea.print("</td>");
+            nuevaLinea.print("<td>");
+            nuevaLinea.print("<b>" + encabezado1[1] + "</b>");
+            nuevaLinea.print("</td>");
+            nuevaLinea.println("</tr>");
             for (int i = 0; i < valoresx.length; i++) {
                 if (valoresx[i] != null) {
                     nuevaLinea.println("<tr>");
@@ -422,7 +436,7 @@ public class Inicio extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void metodoinsercion(int[] ordenary, String[] ordenarx, int tipo) {
+   /* private void metodoinsercion(int[] ordenary, String[] ordenarx, int tipo) {
         int insercion;
         String insercionx;
         for (int siguiente = 1; siguiente < ordenary.length; siguiente++) {
@@ -437,17 +451,11 @@ public class Inicio extends javax.swing.JFrame {
                         moverElemento--;
                         pasos++;
                         labelpasos.setText(String.valueOf(pasos));
-                        borrar();
-                        for (int j = 0; j < ordenary.length; j++) {
-                            cat.setValue(ordenary[j], "", ordenarx[j]);
-                        }
-                   }
+
+                    }
                     ordenary[moverElemento] = insercion;
                     ordenarx[moverElemento] = insercionx;
-                    borrar();
-                    for (int j = 0; j < ordenary.length; j++) {
-                        cat.setValue(ordenary[j], "", ordenarx[j]);
-                    }
+                    mostrar(encabezado1, titulo, ordenary, ordenarx);
                     break;
                 case 1: //descendente
                     while (moverElemento > 0 && ordenary[moverElemento - 1] < insercion) {
@@ -456,17 +464,11 @@ public class Inicio extends javax.swing.JFrame {
                         moverElemento--;
                         pasos++;
                         labelpasos.setText(String.valueOf(pasos));
-                        borrar();
-                        for (int j = 0; j < ordenary.length; j++) {
-                            cat.setValue(ordenary[j], "", ordenarx[j]);
-                        }
+
                     }
                     ordenary[moverElemento] = insercion;
                     ordenarx[moverElemento] = insercionx;
-                    borrar();
-                    for (int j = 0; j < ordenary.length; j++) {
-                        cat.setValue(ordenary[j], "", ordenarx[j]);
-                    }
+                    mostrar(encabezado1, titulo, ordenary, ordenarx);
                     break;
                 default:
                     throw new AssertionError();
@@ -474,7 +476,7 @@ public class Inicio extends javax.swing.JFrame {
         }
         this.ordenadox = ordenarx;
         this.ordenadoy = ordenary;
-    }
+    }*/
 
     private void metodoburbuja(int[] ordenary, String[] ordenarx, int tipo) {
         int n, i, l = ordenary.length, temp;
@@ -494,16 +496,14 @@ public class Inicio extends javax.swing.JFrame {
                             n = i;
                             pasos++;
                             labelpasos.setText(String.valueOf(pasos));
-                            borrar();
-                            for (int j = 0; j < valoresy.length; j++) {
-                                cat.setValue(ordenary[j], "", ordenarx[j]);
-                            }
+                            mostrar(encabezado1, titulo, ordenary, ordenarx);
                         }
                     }
                     l = n;
-                    borrar();
-                    for (int j = 0; j < valoresy.length; j++) {
-                        cat.setValue(ordenary[j], "", ordenarx[j]);
+                    try {
+                        TimeUnit.SECONDS.sleep(1);
+                    } catch (Exception e) {
+                        System.out.println("Error: " + e);
                     }
                 } while (n != 0);
                 break;
@@ -521,16 +521,16 @@ public class Inicio extends javax.swing.JFrame {
                             n = i;
                             pasos++;
                             labelpasos.setText(String.valueOf(pasos));
-                            borrar();
-                            for (int j = 0; j < valoresy.length; j++) {
-                                cat.setValue(ordenary[j], "", ordenarx[j]);
-                            }
+                            mostrar(encabezado1, titulo, ordenary, ordenarx);
+
                         }
                     }
                     l = n;
-                    borrar();
-                    for (int j = 0; j < valoresy.length; j++) {
-                        cat.setValue(ordenary[j], "", ordenarx[j]);
+
+                    try {
+                        TimeUnit.SECONDS.sleep(1);
+                    } catch (Exception e) {
+                        System.out.println("Error: " + e);
                     }
                 } while (n != 0);
                 break;
@@ -541,23 +541,52 @@ public class Inicio extends javax.swing.JFrame {
         this.ordenadoy = ordenary;
     }
 
-    private void borrar() {
+    /*private void actualizar(int[] y, String[] x) {
+        borrar();
+        jPanel1.updateUI();
+        for (int j = 0; j < valoresy.length; j++) {
+            cat.setValue(y[j], "", x[j]);
+        }
+        try {
+            sleep(100);
+        } catch (Exception e) {
+        }
+          
+          revalidate();
+    }*/
+
+ /* private void borrar() {
         int k = cat.getColumnCount();
         for (int i = 0; i < k; i++) {
             cat.removeColumn(0);
         }
-    }
-
-    private JFreeChart mostrar(DefaultCategoryDataset dataset, String nombre, String enca1, String enca2) {
+    }*/
+    private void mostrar(String[] encabezado1, String titulo, int[] tempoy, String[] tempox) {
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        //añadir los valores a la grafica
+        for (int j = 0; j < tempox.length; j++) {
+            dataset.setValue(tempoy[j], "", tempox[j]);
+        }
+        //graficar
         JFreeChart barChart = ChartFactory.createBarChart(
-                nombre,
-                enca1,
-                enca2,
+                titulo,
+                encabezado1[0],
+                encabezado1[1],
                 dataset,
                 PlotOrientation.VERTICAL,
                 false, true, false);
-        return barChart;
+        ChartPanel panel = new ChartPanel(barChart);
+        panel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
+        panel.setPreferredSize(new Dimension(400, 400));
+        panel.setBackground(Color.white);
+        jPanel1.removeAll();
+        jPanel1.setLayout(new BorderLayout());
+        jPanel1.add(panel, BorderLayout.NORTH);
+        pack();
+        repaint();
+        revalidate();
     }
+
     /**
      * @param args the command line arguments
      */
