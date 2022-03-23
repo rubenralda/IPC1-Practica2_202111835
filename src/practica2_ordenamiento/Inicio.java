@@ -52,7 +52,6 @@ public class Inicio extends javax.swing.JFrame {
         insertion.setSelected(true);
 
     }
-    private int pasos;
     private static int[] valoresy;
     private static String[] valoresx;
     private static int[] ordenadoy;
@@ -93,6 +92,11 @@ public class Inicio extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        txtruta.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
+        txtnombre.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
+        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton1.setText("Generar gráfica");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -100,14 +104,19 @@ public class Inicio extends javax.swing.JFrame {
             }
         });
 
+        ascend.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         ascend.setText("Ascendente");
 
+        descend.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         descend.setText("Descendente");
 
+        insertion.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         insertion.setText("Insertion sort");
 
+        merge.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         merge.setText("buble sort");
 
+        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton2.setText("Ordenar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -115,6 +124,7 @@ public class Inicio extends javax.swing.JFrame {
             }
         });
 
+        jButton3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton3.setText("Examinar...");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -133,14 +143,19 @@ public class Inicio extends javax.swing.JFrame {
             .addGap(0, 337, Short.MAX_VALUE)
         );
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel1.setText("00:00");
 
+        labelpasos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         labelpasos.setText("00");
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setText("Cronometro");
 
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setText("Pasos");
 
+        jButton4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton4.setText("Generar reporte");
         jButton4.setEnabled(false);
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -155,7 +170,7 @@ public class Inicio extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
@@ -168,7 +183,8 @@ public class Inicio extends javax.swing.JFrame {
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(descend)
                                 .addComponent(ascend, javax.swing.GroupLayout.Alignment.LEADING))
-                            .addComponent(merge)))
+                            .addComponent(merge))
+                        .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -179,26 +195,31 @@ public class Inicio extends javax.swing.JFrame {
                                 .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jButton1)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 154, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 115, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addComponent(jLabel1)
-                                    .addGap(31, 31, 31))
                                 .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel4)
-                                        .addComponent(labelpasos))
-                                    .addGap(28, 28, 28))))
-                        .addGap(43, 43, 43)
-                        .addComponent(jButton4)))
+                                    .addComponent(labelpasos)
+                                    .addGap(234, 234, 234))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING))
+                                    .addGap(168, 168, 168)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addGap(141, 141, 141))))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton4)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(41, 41, 41)
+                .addContainerGap()
+                .addComponent(jButton4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -221,16 +242,14 @@ public class Inicio extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(jButton4))
+                        .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(labelpasos)
-                        .addGap(4, 4, 4)
+                        .addGap(2, 2, 2)
                         .addComponent(jLabel4)
-                        .addGap(11, 11, 11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         pack();
@@ -281,14 +300,7 @@ public class Inicio extends javax.swing.JFrame {
                     i++;
                 }
                 //graficar
-
                 mostrar(encabezado1, titulo, valoresy, valoresx);
-
-                //añadir los valores a la grafica
-                /*borrar();
-                for (int j = 0; j < tamano - 1; j++) {
-                    cat.setValue(valoresy[j], "", valoresx[j]);
-                }*/
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             } finally {
@@ -307,7 +319,6 @@ public class Inicio extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-
         if (valoresy != null) {
             ordenadoy = new int[valoresx.length];
             ordenadox = new String[valoresx.length];
@@ -328,15 +339,17 @@ public class Inicio extends javax.swing.JFrame {
                 algoritmo = "Ordenamiento por inserción";
             } else if (merge.isSelected() == true) {
                 if (ascend.isSelected()) {
-                    // metodoburbuja(temporaly, temporalx, 0);
+                    Burbuja burbuja = new Burbuja(labelpasos, ordenadox, ordenadoy, jPanel1, encabezado1, titulo, jLabel1, 0);
+                    burbuja.start();
                 } else if (descend.isSelected() == true) {
-                    // metodoburbuja(temporaly, temporalx, 1);
+                    Burbuja burbuja = new Burbuja(labelpasos, ordenadox, ordenadoy, jPanel1, encabezado1, titulo, jLabel1, 1);
+                    burbuja.start();
                 }
                 jButton4.setEnabled(true);
                 algoritmo = "Ordenamiento por burbuja";
             }
         } else {
-            JOptionPane.showMessageDialog(this, "No se generado una grafica");
+            JOptionPane.showMessageDialog(this, "No hay un archivo cargado", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
     //creacion de reporte
@@ -373,10 +386,10 @@ public class Inicio extends javax.swing.JFrame {
                     + "<body>");
 
             nuevaLinea.println("<h1>Reporte </h1>");
-            nuevaLinea.println("<p><b>Nombre: </b>Rubén Ralda</p>");
-            nuevaLinea.println("<p><b>Carné: </b>202111835</p>");
+            nuevaLinea.println("<p><b>Nombre: </b>Ruben Ralda</p>");
+            nuevaLinea.println("<p><b>Carne: </b>202111835</p>");
             nuevaLinea.println("<p><b>Algoritmo: </b>" + algoritmo + "</p>");
-            nuevaLinea.println("<p><b>Tiempo: </b>" + pasos + "</p>");//falta el cronometro
+            nuevaLinea.println("<p><b>Tiempo: </b>" + jLabel1.getText() + "</p>");
             nuevaLinea.println("<p><b>Cantidad de pasos: </b>" + labelpasos.getText() + "</p>");
             nuevaLinea.println("<table border=\"1\">");
             nuevaLinea.println("<tr>");
@@ -436,131 +449,6 @@ public class Inicio extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
-   /* private void metodoinsercion(int[] ordenary, String[] ordenarx, int tipo) {
-        int insercion;
-        String insercionx;
-        for (int siguiente = 1; siguiente < ordenary.length; siguiente++) {
-            insercion = ordenary[siguiente];
-            insercionx = ordenarx[siguiente];
-            int moverElemento = siguiente;
-            switch (tipo) {
-                case 0: //ascendente
-                    while (moverElemento > 0 && ordenary[moverElemento - 1] > insercion) {
-                        ordenary[moverElemento] = ordenary[moverElemento - 1];
-                        ordenarx[moverElemento] = ordenarx[moverElemento - 1];
-                        moverElemento--;
-                        pasos++;
-                        labelpasos.setText(String.valueOf(pasos));
-
-                    }
-                    ordenary[moverElemento] = insercion;
-                    ordenarx[moverElemento] = insercionx;
-                    mostrar(encabezado1, titulo, ordenary, ordenarx);
-                    break;
-                case 1: //descendente
-                    while (moverElemento > 0 && ordenary[moverElemento - 1] < insercion) {
-                        ordenary[moverElemento] = ordenary[moverElemento - 1];
-                        ordenarx[moverElemento] = ordenarx[moverElemento - 1];
-                        moverElemento--;
-                        pasos++;
-                        labelpasos.setText(String.valueOf(pasos));
-
-                    }
-                    ordenary[moverElemento] = insercion;
-                    ordenarx[moverElemento] = insercionx;
-                    mostrar(encabezado1, titulo, ordenary, ordenarx);
-                    break;
-                default:
-                    throw new AssertionError();
-            }
-        }
-        this.ordenadox = ordenarx;
-        this.ordenadoy = ordenary;
-    }*/
-
-    private void metodoburbuja(int[] ordenary, String[] ordenarx, int tipo) {
-        int n, i, l = ordenary.length, temp;
-        String temp2;
-        switch (tipo) {
-            case 0://ascendente
-                do {
-                    n = 0;
-                    for (i = 1; i < l; i++) {
-                        if (ordenary[i - 1] > ordenary[i]) {
-                            temp = ordenary[i - 1];
-                            ordenary[i - 1] = ordenary[i];
-                            ordenary[i] = temp;
-                            temp2 = ordenarx[i - 1];
-                            ordenarx[i - 1] = ordenarx[i];
-                            ordenarx[i] = temp2;
-                            n = i;
-                            pasos++;
-                            labelpasos.setText(String.valueOf(pasos));
-                            mostrar(encabezado1, titulo, ordenary, ordenarx);
-                        }
-                    }
-                    l = n;
-                    try {
-                        TimeUnit.SECONDS.sleep(1);
-                    } catch (Exception e) {
-                        System.out.println("Error: " + e);
-                    }
-                } while (n != 0);
-                break;
-            case 1://descendente
-                do {
-                    n = 0;
-                    for (i = 1; i < l; i++) {
-                        if (ordenary[i - 1] < ordenary[i]) {
-                            temp = ordenary[i - 1];
-                            ordenary[i - 1] = ordenary[i];
-                            ordenary[i] = temp;
-                            temp2 = ordenarx[i - 1];
-                            ordenarx[i - 1] = ordenarx[i];
-                            ordenarx[i] = temp2;
-                            n = i;
-                            pasos++;
-                            labelpasos.setText(String.valueOf(pasos));
-                            mostrar(encabezado1, titulo, ordenary, ordenarx);
-
-                        }
-                    }
-                    l = n;
-
-                    try {
-                        TimeUnit.SECONDS.sleep(1);
-                    } catch (Exception e) {
-                        System.out.println("Error: " + e);
-                    }
-                } while (n != 0);
-                break;
-            default:
-                throw new AssertionError();
-        }
-        this.ordenadox = ordenarx;
-        this.ordenadoy = ordenary;
-    }
-
-    /*private void actualizar(int[] y, String[] x) {
-        borrar();
-        jPanel1.updateUI();
-        for (int j = 0; j < valoresy.length; j++) {
-            cat.setValue(y[j], "", x[j]);
-        }
-        try {
-            sleep(100);
-        } catch (Exception e) {
-        }
-          
-          revalidate();
-    }*/
-
- /* private void borrar() {
-        int k = cat.getColumnCount();
-        for (int i = 0; i < k; i++) {
-            cat.removeColumn(0);
-        }
-    }*/
     private void mostrar(String[] encabezado1, String titulo, int[] tempoy, String[] tempox) {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         //añadir los valores a la grafica

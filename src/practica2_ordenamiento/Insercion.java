@@ -62,10 +62,22 @@ public class Insercion extends Thread {
                         moverElemento--;
                         pasos++;
                         labelpasos.setText(String.valueOf(pasos));
-
+                        try {
+                            sleep(100);
+                        } catch (Exception e) {
+                            System.out.println("Error: " + e);
+                        }
+                        mostrar();
                     }
                     ordenary[moverElemento] = insercion;
                     ordenarx[moverElemento] = insercionx;
+                    pasos++;
+                    labelpasos.setText(String.valueOf(pasos));
+                    try {
+                        sleep(100);
+                    } catch (Exception e) {
+                        System.out.println("Error: " + e);
+                    }
                     mostrar();
                 }
                 mostrar();
@@ -82,7 +94,7 @@ public class Insercion extends Thread {
                         pasos++;
                         labelpasos.setText(String.valueOf(pasos));
                         try {
-                            sleep(500);
+                            sleep(100);
                         } catch (Exception e) {
                             System.out.println("Error: " + e);
                         }
@@ -90,14 +102,20 @@ public class Insercion extends Thread {
                     }
                     ordenary[moverElemento] = insercion;
                     ordenarx[moverElemento] = insercionx;
-
+                    pasos++;
+                    labelpasos.setText(String.valueOf(pasos));
+                    try {
+                        sleep(100);
+                    } catch (Exception e) {
+                        System.out.println("Error: " + e);
+                    }
+                    mostrar();
                 }
                 mostrar();
                 break;
             default:
                 throw new AssertionError();
         }
-        
         reloj.setTerminar(false);
     }
 
@@ -122,6 +140,5 @@ public class Insercion extends Thread {
         jpanel.removeAll();
         jpanel.setLayout(new BorderLayout());
         jpanel.add(panel, BorderLayout.NORTH);
-
     }
 }

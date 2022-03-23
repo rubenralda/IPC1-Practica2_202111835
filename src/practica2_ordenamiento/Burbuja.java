@@ -22,28 +22,32 @@ import org.jfree.data.category.DefaultCategoryDataset;
  * @author ruben
  */
 public class Burbuja extends Thread {
-     private JLabel labelpasos;
-    private String[] ordenadox;
-    private int[] ordenadoy;
+
+    private JLabel labelpasos;
+    private String[] ordenarx;
+    private int[] ordenary;
     private JPanel jpanel;
     private String[] encabezado;
     private String titulo;
     private JLabel crono;
+    private int tipo;
 
-    public Burbuja(JLabel labelpasos, String[] ordenadox, int[] ordenadoy, JPanel jpanel, String[] encabezado, String titulo,JLabel crono) {
+    public Burbuja(JLabel labelpasos, String[] ordenadox, int[] ordenadoy, JPanel jpanel, String[] encabezado, String titulo, JLabel crono, int tipo) {
         this.labelpasos = labelpasos;
-        this.ordenadox = ordenadox;
-        this.ordenadoy = ordenadoy;
+        this.ordenarx = ordenadox;
+        this.ordenary = ordenadoy;
         this.jpanel = jpanel;
         this.encabezado = encabezado;
         this.titulo = titulo;
-        this.crono=crono;
+        this.crono = crono;
+        this.tipo = tipo;
     }
-    
-    public void run(int[] ordenary, String[] ordenarx, int tipo) {
-        int n, i, l = ordenary.length, temp,pasos=0;
+
+    @Override
+    public void run() {
+        int n, i, l = ordenary.length, temp, pasos = 0;
         String temp2;
-        Cronometro reloj= new Cronometro(crono);
+        Cronometro reloj = new Cronometro(crono);
         reloj.start();
         switch (tipo) {
             case 0://ascendente
@@ -60,15 +64,23 @@ public class Burbuja extends Thread {
                             n = i;
                             pasos++;
                             labelpasos.setText(String.valueOf(pasos));
-                            mostrar(encabezado, titulo, ordenary, ordenarx);
+                            try {
+                                sleep(100);
+                            } catch (Exception e) {
+                                System.out.println("Error: " + e);
+                            }
+                            mostrar();
                         }
                     }
                     l = n;
+                    pasos++;
+                    labelpasos.setText(String.valueOf(pasos));
                     try {
-                        TimeUnit.SECONDS.sleep(1);
+                        sleep(100);
                     } catch (Exception e) {
                         System.out.println("Error: " + e);
                     }
+                    mostrar();
                 } while (n != 0);
                 break;
             case 1://descendente
@@ -85,37 +97,43 @@ public class Burbuja extends Thread {
                             n = i;
                             pasos++;
                             labelpasos.setText(String.valueOf(pasos));
-                            mostrar(encabezado, titulo, ordenary, ordenarx);
+                            try {
+                                sleep(100);
+                            } catch (Exception e) {
+                                System.out.println("Error: " + e);
+                            }
+                            mostrar();
 
                         }
                     }
                     l = n;
-                   
+                    pasos++;
+                    labelpasos.setText(String.valueOf(pasos));
                     try {
-                        TimeUnit.SECONDS.sleep(1);
+                        sleep(100);
                     } catch (Exception e) {
                         System.out.println("Error: " + e);
                     }
+                    mostrar();
                 } while (n != 0);
                 break;
             default:
                 throw new AssertionError();
         }
-        
-        this.ordenadox = ordenarx;
-        this.ordenadoy = ordenary;
+        reloj.setTerminar(false);
     }
-     private void mostrar(String[] encabezado1, String titulo, int[] tempoy, String[] tempox) {
+
+    private void mostrar() {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         //añadir los valores a la grafica
-        for (int j = 0; j < tempox.length; j++) {
-            dataset.setValue(tempoy[j], "", tempox[j]);
+        for (int j = 0; j < ordenarx.length; j++) {
+            dataset.setValue(ordenary[j], "", ordenarx[j]);
         }
         //graficar
         JFreeChart barChart = ChartFactory.createBarChart(
                 titulo,
-                encabezado1[0],
-                encabezado1[1],
+                encabezado[0],
+                encabezado[1],
                 dataset,
                 PlotOrientation.VERTICAL,
                 false, true, false);
